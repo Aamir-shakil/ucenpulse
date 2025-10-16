@@ -1,15 +1,34 @@
-import React from 'react'
+import React, { useState, useEffect } from "react";
+import { loadData } from "../storage";
+import ActivityForm from "./ActivityForm";
 
 export default function Dashboard() {
+  const [activities, setActivities] = useState(loadData().activities);
+
+  // Refresh activities if localStorage changes from other tabs/windows
+  useEffect(() => {
+    const handleStorageChange = () => setActivities(loadData().activities);
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
+  }, []);
+
   return (
-    <section aria-labelledby="dashboard-heading" style={{ padding: '1rem' }}>
+    <section aria-labelledby="dashboard-heading" style={{ padding: "1rem" }}>
       <h2 id="dashboard-heading">Dashboard</h2>
+
       <p>
         Welcome to <strong>UCENPulse</strong> — your personal fitness and wellness dashboard.
       </p>
       <p>
-        This is the base layout. You’ll soon add features like activity logging, health metrics, and charts here.
+        This is your dashboard. Log activities, track metrics, and explore trends over time.
       </p>
+
+      <div style={{ margin: "1rem 0" }}>
+        <strong>Total activities logged:</strong> {activities.length}
+      </div>
+
+      {/* Activity logging form */}
+      <ActivityForm onNewActivity={setActivities} />
     </section>
-  )
+  );
 }
