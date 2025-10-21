@@ -29,6 +29,21 @@ export default function Dashboard() {
 
       {/* Activity logging form */}
       <ActivityForm onNewActivity={setActivities} />
+
+      {/* Activity list */}
+      {activities.length > 0 && (
+        <div className="activity-list">
+          <h3>Logged Activities</h3>
+          <ul>
+            {activities.map((a) => (
+              <li key={a.id}>
+                <strong>{a.type}</strong> — {a.duration} mins
+                {a.notes && ` — Notes: ${a.notes}`}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </section>
   );
 }
