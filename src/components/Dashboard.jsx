@@ -1,13 +1,18 @@
 import { useState, useEffect } from "react";
 import { loadData } from "../storage";
 import ActivityForm from "./ActivityForm";
+import MetricsForm from "./MetricsForm";
 
 export default function Dashboard() {
   const [activities, setActivities] = useState(loadData().activities);
+  const [metrics, setMetrics] = useState(loadData().metrics);
 
-  // Refresh activities if localStorage changes from other tabs/windows
   useEffect(() => {
-    const handleStorageChange = () => setActivities(loadData().activities);
+    const handleStorageChange = () => {
+      const data = loadData();
+      setActivities(data.activities);
+      setMetrics(data.metrics);
+    };
     window.addEventListener("storage", handleStorageChange);
     return () => window.removeEventListener("storage", handleStorageChange);
   }, []);
@@ -19,18 +24,12 @@ export default function Dashboard() {
       <p>
         Welcome to <strong>UCENPulse</strong> — your personal fitness and wellness dashboard.
       </p>
-      <p>
-        This is your dashboard. Log activities, track metrics, and explore trends over time.
-      </p>
 
       <div className="dashboard-summary">
         <strong>Total activities logged:</strong> {activities.length}
       </div>
 
-      {/* Activity logging form */}
       <ActivityForm onNewActivity={setActivities} />
-
-      {/* Activity list */}
       {activities.length > 0 && (
         <div className="activity-list">
           <h3>Logged Activities</h3>
@@ -39,6 +38,23 @@ export default function Dashboard() {
               <li key={a.id}>
                 <strong>{a.type}</strong> — {a.duration} mins
                 {a.notes && ` — Notes: ${a.notes}`}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      <MetricsForm onNewMetrics={setMetrics} />
+      {metrics.length > 0 && (
+        <div className="metrics-list">
+          <h3>Logged Metrics</h3>
+          <ul>
+            {metrics.map((m) => (
+              <li key={m.id}>
+                {m.steps && `Steps: ${m.steps}, `}
+                {m.sleep && `Sleep: ${m.sleep}h, `}
+                {m.water && `Water: ${m.water}ml, `}
+                {m.calories && `Calories: ${m.calories}`}
               </li>
             ))}
           </ul>
