@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { loadData, saveData } from "../storage";
 
 export default function ActivityForm({ onNewActivity }) {
@@ -27,29 +27,19 @@ export default function ActivityForm({ onNewActivity }) {
 
     saveData(updatedData);
 
-    // Optional: let parent know to refresh state
     if (onNewActivity) onNewActivity(updatedData.activities);
 
-    // Reset form
     setType("");
     setDuration("");
     setNotes("");
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        gap: "0.5rem",
-        marginTop: "1rem",
-      }}
-    >
+    <form onSubmit={handleSubmit} className="activity-form">
       <h3>Log a New Activity</h3>
 
       <label>
-        Activity Type <span style={{ color: "red" }}>*</span>
+        Activity Type <span className="required">*</span>
         <input
           type="text"
           value={type}
@@ -60,7 +50,7 @@ export default function ActivityForm({ onNewActivity }) {
       </label>
 
       <label>
-        Duration (minutes) <span style={{ color: "red" }}>*</span>
+        Duration (minutes) <span className="required">*</span>
         <input
           type="number"
           value={duration}

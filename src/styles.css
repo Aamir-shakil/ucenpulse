@@ -71,3 +71,52 @@ a:hover {
     color: #747bff;
   }
 }
+
+/* ActivityForm styling */
+.activity-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.activity-form input,
+.activity-form textarea {
+  padding: 0.5rem;
+  border-radius: 4px;
+  border: 1px solid #888;
+  font-family: inherit;
+  width: 100%;
+}
+
+.activity-form button {
+  margin-top: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  font-size: 1em;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  background-color: #1a1a1a;
+  color: #fff;
+  transition: border-color 0.25s;
+}
+
+.activity-form button:hover {
+  border-color: #646cff;
+}
+
+.required {
+  color: red;
+}
+
+/* Dashboard section */
+.dashboard-section {
+  padding: 1rem;
+}
+
+.dashboard-summary {
+  margin: 1rem 0;
+  font-weight: 500;
+}
+
+

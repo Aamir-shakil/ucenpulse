@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { loadData } from "../storage";
 import ActivityForm from "./ActivityForm";
 
@@ -13,7 +13,7 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <section aria-labelledby="dashboard-heading" style={{ padding: "1rem" }}>
+    <section aria-labelledby="dashboard-heading" className="dashboard-section">
       <h2 id="dashboard-heading">Dashboard</h2>
 
       <p>
@@ -23,7 +23,7 @@ export default function Dashboard() {
         This is your dashboard. Log activities, track metrics, and explore trends over time.
       </p>
 
-      <div style={{ margin: "1rem 0" }}>
+      <div className="dashboard-summary">
         <strong>Total activities logged:</strong> {activities.length}
       </div>
 
