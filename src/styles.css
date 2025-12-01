@@ -185,5 +185,15 @@ a:hover {
   border-bottom: 1px solid #555;
 }
 
+/*chart Styling */
+.chart-section {
+  margin-top: 2rem;
+  padding: 1rem 0;
+}
+
+.chart-section canvas {
+  max-width: 100%;
+  margin: 0 auto;
+}
 
 

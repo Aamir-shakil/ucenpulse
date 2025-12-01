@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { loadData } from "../storage";
 import ActivityForm from "./ActivityForm";
 import MetricsForm from "./MetricsForm";
+import TrendsChart from "./TrendsChart";
 
 export default function Dashboard() {
   const [activities, setActivities] = useState(loadData().activities);
@@ -25,11 +26,15 @@ export default function Dashboard() {
         Welcome to <strong>UCENPulse</strong> — your personal fitness and wellness dashboard.
       </p>
 
+      {/* Summary */}
       <div className="dashboard-summary">
         <strong>Total activities logged:</strong> {activities.length}
       </div>
 
+      {/* Activity Form */}
       <ActivityForm onNewActivity={setActivities} />
+
+      {/* Activity List */}
       {activities.length > 0 && (
         <div className="activity-list">
           <h3>Logged Activities</h3>
@@ -44,7 +49,10 @@ export default function Dashboard() {
         </div>
       )}
 
+      {/* Metrics Form */}
       <MetricsForm onNewMetrics={setMetrics} />
+
+      {/* Metrics List */}
       {metrics.length > 0 && (
         <div className="metrics-list">
           <h3>Logged Metrics</h3>
@@ -60,6 +68,40 @@ export default function Dashboard() {
           </ul>
         </div>
       )}
+
+      {}
+
+      {/* Steps Trend Chart */}
+      {metrics.length > 0 && (
+        <div className="chart-section">
+          <h3>Weekly Steps Trend</h3>
+          <TrendsChart
+            type="line"
+            title="Steps (last 7 entries)"
+            labels={metrics.slice(-7).map((m) =>
+              new Date(m.date).toLocaleDateString()
+            )}
+            data={metrics.slice(-7).map((m) => m.steps || 0)}
+          />
+        </div>
+      )}
+
+      {/* Activity Duration Chart */}
+      {activities.length > 0 && (
+        <div className="chart-section">
+          <h3>Weekly Activity Duration</h3>
+          <TrendsChart
+            type="bar"
+            title="Activity Duration (last 7 entries)"
+            labels={activities.slice(-7).map((a) =>
+              new Date(a.date).toLocaleDateString()
+            )}
+            data={activities.slice(-7).map((a) => a.duration || 0)}
+          />
+        </div>
+      )}
+
+      {}
     </section>
   );
 }
