@@ -69,39 +69,45 @@ export default function Dashboard() {
         </div>
       )}
 
-      {}
+      {/* === Chart Grid (side-by-side charts) === */}
+      {(metrics.length > 0 || activities.length > 0) && (
+        <div className="chart-grid">
 
-      {/* Steps Trend Chart */}
-      {metrics.length > 0 && (
-        <div className="chart-section">
-          <h3>Weekly Steps Trend</h3>
-          <TrendsChart
-            type="line"
-            title="Steps (last 7 entries)"
-            labels={metrics.slice(-7).map((m) =>
-              new Date(m.date).toLocaleDateString()
-            )}
-            data={metrics.slice(-7).map((m) => m.steps || 0)}
-          />
+          {/* Steps Trend Chart */}
+          {metrics.length > 0 && (
+            <div className="chart-section">
+              <h3>Weekly Steps Trend</h3>
+              <TrendsChart
+                type="line"
+                title="Steps (last 7 entries)"
+                yLabel="Steps"
+                labels={metrics.slice(-7).map((m) =>
+                  new Date(m.date).toLocaleDateString()
+                )}
+                data={metrics.slice(-7).map((m) => m.steps || 0)}
+              />
+            </div>
+          )}
+
+          {/* Activity Duration Chart */}
+          {activities.length > 0 && (
+            <div className="chart-section">
+              <h3>Weekly Activity Duration</h3>
+              <TrendsChart
+                type="bar"
+                title="Activity Duration (last 7 entries)"
+                yLabel="Minutes"
+                labels={activities.slice(-7).map((a) =>
+                  `${a.type} — ${new Date(a.date).toLocaleDateString()}`
+                )}
+                data={activities.slice(-7).map((a) => a.duration || 0)}
+              />
+            </div>
+          )}
+
         </div>
       )}
 
-      {/* Activity Duration Chart */}
-      {activities.length > 0 && (
-        <div className="chart-section">
-          <h3>Weekly Activity Duration</h3>
-          <TrendsChart
-            type="bar"
-            title="Activity Duration (last 7 entries)"
-            labels={activities.slice(-7).map((a) =>
-              new Date(a.date).toLocaleDateString()
-            )}
-            data={activities.slice(-7).map((a) => a.duration || 0)}
-          />
-        </div>
-      )}
-
-      {}
     </section>
   );
 }

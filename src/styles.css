@@ -185,15 +185,37 @@ a:hover {
   border-bottom: 1px solid #555;
 }
 
-/*chart Styling */
-.chart-section {
+/*chart Styling */.chart-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
   margin-top: 2rem;
-  padding: 1rem 0;
+  width: 100%;
 }
 
-.chart-section canvas {
-  max-width: 100%;
-  margin: 0 auto;
+.chart-section {
+  background: #ffffff;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
+.chart-section h3 {
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  color: #222;
+}
+
+/* Chart container size */
+.chart-container {
+  width: 100%;
+  height: 450px; /* Bigger charts */
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .chart-grid {
+    grid-template-columns: 1fr;
+  }
+}
 
