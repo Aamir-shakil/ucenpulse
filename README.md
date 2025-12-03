@@ -1,6 +1,6 @@
 📊 UCENPulse — Client-Side Fitness & Wellness Dashboard
 
-UCENPulse is a client-side web application that allows UCEN Manchester students to log their daily activities, track health metrics, and visualise weekly trends.
+UCENPulse is a client-side web application that allows a user to log their daily activities, track health metrics, and visualise weekly trends.
 This prototype focuses on modern JavaScript, React, localStorage, and Chart.js, with strong emphasis on responsiveness and accessibility.
 
 ✨ Features
