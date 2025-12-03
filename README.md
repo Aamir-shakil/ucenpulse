@@ -1,16 +1,75 @@
-# React + Vite
+📊 UCENPulse — Client-Side Fitness & Wellness Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+UCENPulse is a client-side web application that allows UCEN Manchester students to log their daily activities, track health metrics, and visualise weekly trends.
+This prototype focuses on modern JavaScript, React, localStorage, and Chart.js, with strong emphasis on responsiveness and accessibility.
 
-Currently, two official plugins are available:
+✨ Features
+✔ Activity Logging
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Add daily activities (Running, Cycling, Gym, etc.)
 
-## React Compiler
+Include duration (minutes) and optional notes
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Stored persistently using localStorage
 
-## Expanding the ESLint configuration
+✔ Health Metrics Tracking
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Track wellness data such as:
+
+Steps
+
+Sleep hours
+
+Water intake
+
+Calories burned
+
+✔ Data Visualisation (Chart.js)
+
+Interactive, responsive charts:
+
+Weekly Steps Trend (Line Chart)
+
+Weekly Activity Duration (Bar Chart)
+
+✔ Dashboard Overview
+
+Total number of activities logged
+
+Recently added entries
+
+Summaries + insights in a clear layout
+
+✔ Responsive & Accessible
+
+Mobile-friendly design
+
+Semantic HTML
+
+ARIA labels for screen readers
+
+High-contrast, readable colours
+
+🛠️ Technologies Used
+
+React (Vite) — Component-based UI
+
+Chart.js — Graphs & data visualisation
+
+LocalStorage — Client-side persistence
+
+CSS3 — Custom responsive styling
+
+JavaScript (ES6+) — Modern scripting
+
+
+
+▶️ Getting Started - run following commands in terminal 
+1. Install Dependencies
+npm install
+
+2. Start the Development Server
+npm run dev
+
+
+The site will auto-refresh whenever you save changes.
