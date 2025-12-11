@@ -40,13 +40,15 @@ export default function ActivityForm({ onNewActivity }) {
 
       <label>
         Activity Type <span className="required">*</span>
-        <input
-          type="text"
-          value={type}
-          onChange={(e) => setType(e.target.value)}
-          placeholder="e.g., Running, Cycling"
-          required
-        />
+        <select value={type} onChange={(e) => setType(e.target.value)} required>
+          <option value="">Select an activity</option>
+          <option value="Running">Running</option>
+          <option value="Cycling">Cycling</option>
+          <option value="Swimming">Swimming</option>
+          <option value="Gym">Gym</option>
+          <option value="Yoga">Yoga</option>
+          <option value="Walking">Walking</option>
+        </select>
       </label>
 
       <label>
