@@ -75,34 +75,44 @@ export default function Dashboard() {
 
           {/* Steps Trend Chart */}
           {metrics.length > 0 && (
-            <div className="chart-section">
+            <figure className="chart-section">
               <h3>Weekly Steps Trend</h3>
-              <TrendsChart
-                type="line"
-                title="Steps (last 7 entries)"
-                yLabel="Steps"
-                labels={metrics.slice(-7).map((m) =>
-                  new Date(m.date).toLocaleDateString()
-                )}
-                data={metrics.slice(-7).map((m) => m.steps || 0)}
-              />
-            </div>
+              <div className="chart-container">
+                <TrendsChart
+                  type="line"
+                  title="Steps (last 7 entries)"
+                  yLabel="Steps"
+                  labels={metrics.slice(-7).map((m) =>
+                    new Date(m.date).toLocaleDateString()
+                  )}
+                  data={metrics.slice(-7).map((m) => m.steps || 0)}
+                />
+              </div>
+              <figcaption className="sr-only">
+                Line chart showing steps for the last 7 logged metrics. Each point represents the number of steps on a given date.
+              </figcaption>
+            </figure>
           )}
 
           {/* Activity Duration Chart */}
           {activities.length > 0 && (
-            <div className="chart-section">
+            <figure className="chart-section">
               <h3>Weekly Activity Duration</h3>
-              <TrendsChart
-                type="bar"
-                title="Activity Duration (last 7 entries)"
-                yLabel="Minutes"
-                labels={activities.slice(-7).map((a) =>
-                  `${a.type} — ${new Date(a.date).toLocaleDateString()}`
-                )}
-                data={activities.slice(-7).map((a) => a.duration || 0)}
-              />
-            </div>
+              <div className="chart-container">
+                <TrendsChart
+                  type="bar"
+                  title="Activity Duration (last 7 entries)"
+                  yLabel="Minutes"
+                  labels={activities.slice(-7).map((a) =>
+                    `${a.type} — ${new Date(a.date).toLocaleDateString()}`
+                  )}
+                  data={activities.slice(-7).map((a) => a.duration || 0)}
+                />
+              </div>
+              <figcaption className="sr-only">
+                Bar chart showing the last 7 logged activities. Each bar represents the activity type and duration in minutes on the corresponding date.
+              </figcaption>
+            </figure>
           )}
 
         </div>
