@@ -7,6 +7,7 @@ import TrendsChart from "./TrendsChart";
 export default function Dashboard() {
   const [activities, setActivities] = useState(loadData().activities);
   const [metrics, setMetrics] = useState(loadData().metrics);
+  const [range, setRange] = useState("7"); // Default last 7 entries
 
   useEffect(() => {
     const handleStorageChange = () => {
@@ -18,6 +19,16 @@ export default function Dashboard() {
     return () => window.removeEventListener("storage", handleStorageChange);
   }, []);
 
+  // Sort by date ascending
+  const sortedMetrics = [...metrics].sort((a, b) => new Date(a.date) - new Date(b.date));
+  const sortedActivities = [...activities].sort((a, b) => new Date(a.date) - new Date(b.date));
+
+  // Filter based on range
+  const filteredMetrics =
+    range === "all" ? sortedMetrics : sortedMetrics.slice(-Number(range));
+  const filteredActivities =
+    range === "all" ? sortedActivities : sortedActivities.slice(-Number(range));
+
   return (
     <section id="main-content" aria-labelledby="dashboard-heading" className="dashboard-section">
       <h2 id="dashboard-heading">Dashboard</h2>
@@ -27,7 +38,7 @@ export default function Dashboard() {
       </p>
 
       {/* Summary */}
-      <div className="dashboard-summary card">
+      <div className="dashboard-summary">
         <strong>Total activities logged:</strong> {activities.length}
       </div>
 
@@ -39,7 +50,7 @@ export default function Dashboard() {
         <div className="card activity-list">
           <h3>Logged Activities</h3>
           <ul>
-            {activities.map((a) => (
+            {sortedActivities.map((a) => (
               <li key={a.id}>
                 <strong>{a.type}</strong> — {a.duration} mins
                 {a.notes && ` — Notes: ${a.notes}`}
@@ -57,7 +68,7 @@ export default function Dashboard() {
         <div className="card metrics-list">
           <h3>Logged Metrics</h3>
           <ul>
-            {metrics.map((m) => (
+            {sortedMetrics.map((m) => (
               <li key={m.id}>
                 {m.steps && `Steps: ${m.steps}, `}
                 {m.sleep && `Sleep: ${m.sleep}h, `}
@@ -69,48 +80,62 @@ export default function Dashboard() {
         </div>
       )}
 
-      {/* === Chart Grid (side-by-side charts) === */}
+      {/* Chart Range Filter */}
+      {(metrics.length > 0 || activities.length > 0) && (
+        <div className="chart-filters">
+          <label htmlFor="range-filter"><strong>Show:</strong></label>
+          <select
+            id="range-filter"
+            value={range}
+            onChange={(e) => setRange(e.target.value)}
+          >
+            <option value="7">Last 7 entries</option>
+            <option value="30">Last 30 entries</option>
+            <option value="all">All entries</option>
+          </select>
+        </div>
+      )}
+
+      {/* Chart Grid */}
       {(metrics.length > 0 || activities.length > 0) && (
         <div className="chart-grid">
 
           {/* Steps Trend Chart */}
           {metrics.length > 0 && (
-            <figure className="chart-section card">
-              <h3>Weekly Steps Trend</h3>
+            <figure className="chart-section">
+              <h3>Steps Trend</h3>
               <div className="chart-container">
                 <TrendsChart
                   type="line"
-                  title="Steps (last 7 entries)"
+                  title={`Steps (last ${range} entries)`}
                   yLabel="Steps"
-                  labels={metrics.slice(-7).map((m) =>
-                    new Date(m.date).toLocaleDateString()
-                  )}
-                  data={metrics.slice(-7).map((m) => m.steps || 0)}
+                  labels={filteredMetrics.map((m) => new Date(m.date).toLocaleDateString())}
+                  data={filteredMetrics.map((m) => m.steps || 0)}
                 />
               </div>
               <figcaption className="sr-only">
-                Line chart showing steps for the last 7 logged metrics. Each point represents the number of steps on a given date.
+                Line chart showing your step counts over the selected range.
               </figcaption>
             </figure>
           )}
 
           {/* Activity Duration Chart */}
           {activities.length > 0 && (
-            <figure className="chart-section card">
-              <h3>Weekly Activity Duration</h3>
+            <figure className="chart-section">
+              <h3>Activity Duration</h3>
               <div className="chart-container">
                 <TrendsChart
                   type="bar"
-                  title="Activity Duration (last 7 entries)"
+                  title={`Activity Duration (last ${range} entries)`}
                   yLabel="Minutes"
-                  labels={activities.slice(-7).map((a) =>
+                  labels={filteredActivities.map((a) =>
                     `${a.type} — ${new Date(a.date).toLocaleDateString()}`
                   )}
-                  data={activities.slice(-7).map((a) => a.duration || 0)}
+                  data={filteredActivities.map((a) => a.duration || 0)}
                 />
               </div>
               <figcaption className="sr-only">
-                Bar chart showing the last 7 logged activities. Each bar represents the activity type and duration in minutes on the corresponding date.
+                Bar chart showing your logged activities over the selected range.
               </figcaption>
             </figure>
           )}
