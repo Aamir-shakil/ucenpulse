@@ -27,7 +27,7 @@ export default function Dashboard() {
       </p>
 
       {/* Summary */}
-      <div className="dashboard-summary">
+      <div className="dashboard-summary card">
         <strong>Total activities logged:</strong> {activities.length}
       </div>
 
@@ -36,7 +36,7 @@ export default function Dashboard() {
 
       {/* Activity List */}
       {activities.length > 0 && (
-        <div className="activity-list">
+        <div className="card activity-list">
           <h3>Logged Activities</h3>
           <ul>
             {activities.map((a) => (
@@ -54,7 +54,7 @@ export default function Dashboard() {
 
       {/* Metrics List */}
       {metrics.length > 0 && (
-        <div className="metrics-list">
+        <div className="card metrics-list">
           <h3>Logged Metrics</h3>
           <ul>
             {metrics.map((m) => (
@@ -75,7 +75,7 @@ export default function Dashboard() {
 
           {/* Steps Trend Chart */}
           {metrics.length > 0 && (
-            <figure className="chart-section">
+            <figure className="chart-section card">
               <h3>Weekly Steps Trend</h3>
               <div className="chart-container">
                 <TrendsChart
@@ -96,7 +96,7 @@ export default function Dashboard() {
 
           {/* Activity Duration Chart */}
           {activities.length > 0 && (
-            <figure className="chart-section">
+            <figure className="chart-section card">
               <h3>Weekly Activity Duration</h3>
               <div className="chart-container">
                 <TrendsChart
