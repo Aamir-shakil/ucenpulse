@@ -1,37 +1,53 @@
+/* ===========================================
+   WCAG Accessible Colour System 
+   =========================================== */
 :root {
-  --background-color: #242424;
-  --text-color: rgba(255, 255, 255, 0.87);
+  --background-color: #F9FAFB;       
+  --text-color: #111827;             
+  --muted-text: #4B5563;             
+
+  --primary: #4F46E5;               
+  --primary-hover: #4338CA;
+
+ --secondary: #1E40AF;             
+  --secondary-hover: #1E3A8A;       
+
+  --card-bg: #FFFFFF;
+  --border-color: #E5E7EB;
+
+  --error: #DC2626;
 }
 
+/* ===========================================
+   Skip Link 
+   =========================================== */
 .skip-link {
   position: absolute;
   top: -40px;
   left: 10px;
-  background: #000;
-  color: #fff;
+  background: var(--primary);
+  color: white;
   padding: 8px 16px;
   z-index: 1000;
   border-radius: 4px;
   text-decoration: none;
   font-weight: bold;
-  transition: top 0.2s;
 }
 
-/* Appears when focused */
 .skip-link:focus {
   top: 10px;
 }
 
-
+/* ===========================================
+   Global
+   =========================================== */
 body {
   margin: 0;
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
   background-color: var(--background-color);
   color: var(--text-color);
-  min-width: 320px;
   min-height: 100vh;
+  line-height: 1.6;
 }
 
 .app-root {
@@ -40,202 +56,127 @@ body {
   padding: 1rem;
 }
 
+/* ===========================================
+   Header
+   =========================================== */
 .app-header h1 {
   margin: 0;
   font-size: 2rem;
 }
 
 .app-header .muted {
-  color: #a0a0a0;
+  color: var(--muted-text);
   font-size: 0.9rem;
   margin-top: 4px;
 }
 
+/* ===========================================
+   Buttons
+   =========================================== */
 button {
   border-radius: 8px;
-  border: 1px solid transparent;
   padding: 0.6em 1.2em;
   font-size: 1em;
-  font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: var(--secondary);
+  color: white;
+  border: none;
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition: background-color 0.25s;
 }
+
 button:hover {
-  border-color: #646cff;
+  background-color: var(--secondary-hover);
 }
+
 button:focus,
 button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  outline: 3px solid var(--primary);
+  outline-offset: 3px;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: none;
-}
-a:hover {
-  color: #535bf2;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    --background-color: #ffffff;
-    --text-color: #213547;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
-  a:hover {
-    color: #747bff;
-  }
-}
-
-/* ActivityForm styling */
-.activity-form {
+/* ===========================================
+   Forms (Activity + Metrics)
+   =========================================== */
+.activity-form,
+.metrics-form {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.7rem;
   margin-top: 1rem;
 }
 
 .activity-form input,
-.activity-form textarea {
-  padding: 0.5rem;
+.activity-form textarea,
+.metrics-form input {
+  padding: 0.55rem;
   border-radius: 4px;
-  border: 1px solid #888;
-  font-family: inherit;
-  width: 100%;
-}
-
-.activity-form button {
-  margin-top: 0.5rem;
-  padding: 0.6rem 1.2rem;
-  font-size: 1em;
-  border-radius: 6px;
-  border: 1px solid transparent;
-  cursor: pointer;
-  background-color: #1a1a1a;
-  color: #fff;
-  transition: border-color 0.25s;
-}
-
-.activity-form button:hover {
-  border-color: #646cff;
+  border: 2px solid var(--border-color);
+  background: var(--card-bg);
+  color: var(--text-color);
 }
 
 .required {
-  color: red;
+  color: var(--error);
 }
 
-/* Dashboard section */
+/* ===========================================
+   Dashboard
+   =========================================== */
 .dashboard-section {
   padding: 1rem;
 }
 
 .dashboard-summary {
   margin: 1rem 0;
-  font-weight: 500;
+  font-weight: 600;
 }
 
-/* Activity list */
-.activity-list {
-  margin-top: 1.5rem;
-}
-
-.activity-list h3 {
-  margin-bottom: 0.5rem;
-}
-
-.activity-list ul {
-  list-style: none;
-  padding-left: 0;
-}
-
-.activity-list li {
-  padding: 0.4rem 0;
-  border-bottom: 1px solid #555;
-}
-
-/* MetricsForm */
-.metrics-form {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  margin-top: 1.5rem;
-}
-
-.metrics-form input {
-  padding: 0.5rem;
-  border-radius: 4px;
-  border: 1px solid #888;
-  font-family: inherit;
-  width: 100%;
-}
-
-.metrics-form button {
-  margin-top: 0.5rem;
-  padding: 0.6rem 1.2rem;
-  font-size: 1em;
-  border-radius: 6px;
-  border: 1px solid transparent;
-  cursor: pointer;
-  background-color: #1a1a1a;
-  color: #fff;
-  transition: border-color 0.25s;
-}
-
-.metrics-form button:hover {
-  border-color: #646cff;
-}
-
-/* Metrics list styling */
-.metrics-list {
-  margin-top: 1rem;
-}
-
+/* ===========================================
+   Lists
+   =========================================== */
+.activity-list ul,
 .metrics-list ul {
   list-style: none;
   padding-left: 0;
 }
 
+.activity-list li,
 .metrics-list li {
-  padding: 0.4rem 0;
-  border-bottom: 1px solid #555;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--border-color);
 }
 
-/*chart Styling */.chart-grid {
+/* ===========================================
+   Charts
+   =========================================== */
+.chart-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 2rem;
   margin-top: 2rem;
-  width: 100%;
 }
 
 .chart-section {
-  background: #ffffff;
+  background: var(--card-bg);
   padding: 1rem;
   border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  border: 1px solid var(--border-color);
 }
 
 .chart-section h3 {
   margin-bottom: 1rem;
-  font-size: 1.2rem;
-  color: #222;
+  font-size: 1.25rem;
+  color: var(--text-color);
 }
 
-/* Chart container size */
 .chart-container {
   width: 100%;
-  height: 450px; /* Bigger charts */
+  height: 450px;
 }
 
-/* Mobile responsiveness */
 @media (max-width: 768px) {
   .chart-grid {
     grid-template-columns: 1fr;
   }
 }
-
