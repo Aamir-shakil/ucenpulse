@@ -19,7 +19,7 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <section aria-labelledby="dashboard-heading" className="dashboard-section">
+    <section id="main-content" aria-labelledby="dashboard-heading" className="dashboard-section">
       <h2 id="dashboard-heading">Dashboard</h2>
 
       <p>
