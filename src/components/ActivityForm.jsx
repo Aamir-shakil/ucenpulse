@@ -1,3 +1,16 @@
+/**
+ * ActivityForm.jsx
+ * ----------------
+ * React component for logging daily physical activities.
+ * Functionality:
+ * - Handles form submission and basic validation (type and duration required).
+ * - Creates a new activity object with a unique ID and timestamp.
+ * - Loads current activities from localStorage and appends the new activity.
+ * - Saves updated data back to localStorage.
+ * - Calls onNewActivity callback to update the parent component.
+ * - Resets the form fields after submission.
+ */
+
 import { useState } from "react";
 import { loadData, saveData } from "../storage";
 

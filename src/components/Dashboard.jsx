@@ -1,3 +1,14 @@
+/**
+ * Dashboard.jsx
+ * --------------
+ * Responsibilities:
+ * - Load and display stored activities and metrics
+ * - Provide forms for adding new data
+ * - Show summaries and visual trends using charts
+ * - Support responsive layout and accessibility
+ *
+ * Data is stored client-side using localStorage.
+ */
 import { useState, useEffect } from "react";
 import { loadData } from "../storage";
 import ActivityForm from "./ActivityForm";

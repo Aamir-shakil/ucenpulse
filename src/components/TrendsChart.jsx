@@ -1,3 +1,13 @@
+/**
+ * TrendsChart.jsx
+ * ----------------
+ * Supports:
+ * - Line and bar charts
+ * - Responsive resizing
+ * - Accessible canvas labels
+ *
+ * Used to visualise trends in activities and health metrics.
+ */
 import { useEffect, useRef } from "react";
 import Chart from "chart.js/auto";
 

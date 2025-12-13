@@ -1,3 +1,16 @@
+/**
+ * MetricsForm.jsx
+ * ----------------
+ * A React component for logging daily health metrics such as steps, sleep, water intake, and calories burned.
+ * Functionality:
+ * - Handles form submission.
+ * - Creates a new metric object with a unique ID and current timestamp.
+ * - Loads existing data from localStorage using `loadData`.
+ * - Appends the new metric to the metrics array and saves it using `saveData`.
+ * - Calls the `onNewMetrics` callback to update the parent component.
+ * - Resets the input fields after submission.
+ */
+
 import { useState } from "react";
 import { loadData, saveData } from "../storage";
 
@@ -10,6 +23,7 @@ export default function MetricsForm({ onNewMetrics }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    // Create new metric entry
     const newMetric = {
       id: Date.now(),
       steps: steps || null,
@@ -19,16 +33,20 @@ export default function MetricsForm({ onNewMetrics }) {
       date: new Date().toISOString(),
     };
 
+    // Load current data and update metrics
     const data = loadData();
     const updatedData = {
       ...data,
       metrics: [...data.metrics, newMetric],
     };
 
+    // Save updated data to localStorage
     saveData(updatedData);
 
+    // Call parent callback to update metrics state
     if (onNewMetrics) onNewMetrics(updatedData.metrics);
 
+    // Reset form fields
     setSteps("");
     setSleep("");
     setWater("");

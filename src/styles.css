@@ -165,7 +165,7 @@ button:focus-visible {
   border: 1px solid var(--border-color);
 }
 
-/* IMPORTANT: Chart.js sizing */
+/* Chart.js sizing */
 .chart-container {
   position: relative;
   width: 100%;

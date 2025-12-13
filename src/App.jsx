@@ -1,4 +1,13 @@
-
+/**
+ * App.jsx
+ * --------
+ * Root component of UCENPulse client-side application.
+ *
+ * Responsibilities:
+ * - Provide global layout and container
+ * - Include accessible "Skip Link" for keyboard navigation
+ * - Render the Dashboard component where all activity and metrics functionality exists
+ */
 import React from 'react'
 import Dashboard from './components/Dashboard'
 import './styles.css'
