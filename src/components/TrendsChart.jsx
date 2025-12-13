@@ -45,6 +45,7 @@ export default function TrendsChart({ title, labels, data, type, yLabel }) {
       options: {
         responsive: true,
         maintainAspectRatio: false,
+       
 
         plugins: {
           title: {

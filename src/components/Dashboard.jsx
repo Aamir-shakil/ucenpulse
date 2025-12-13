@@ -104,15 +104,13 @@ export default function Dashboard() {
           {metrics.length > 0 && (
             <figure className="chart-section">
               <h3>Steps Trend</h3>
-              <div className="chart-container">
-                <TrendsChart
-                  type="line"
-                  title={`Steps (last ${range} entries)`}
-                  yLabel="Steps"
-                  labels={filteredMetrics.map((m) => new Date(m.date).toLocaleDateString())}
-                  data={filteredMetrics.map((m) => m.steps || 0)}
-                />
-              </div>
+              <TrendsChart
+                type="line"
+                title={`Steps (last ${range} entries)`}
+                yLabel="Steps"
+                labels={filteredMetrics.map((m) => new Date(m.date).toLocaleDateString())}
+                data={filteredMetrics.map((m) => m.steps || 0)}
+              />
               <figcaption className="sr-only">
                 Line chart showing your step counts over the selected range.
               </figcaption>
@@ -123,17 +121,15 @@ export default function Dashboard() {
           {activities.length > 0 && (
             <figure className="chart-section">
               <h3>Activity Duration</h3>
-              <div className="chart-container">
-                <TrendsChart
-                  type="bar"
-                  title={`Activity Duration (last ${range} entries)`}
-                  yLabel="Minutes"
-                  labels={filteredActivities.map((a) =>
-                    `${a.type} — ${new Date(a.date).toLocaleDateString()}`
-                  )}
-                  data={filteredActivities.map((a) => a.duration || 0)}
-                />
-              </div>
+              <TrendsChart
+                type="bar"
+                title={`Activity Duration (last ${range} entries)`}
+                yLabel="Minutes"
+                labels={filteredActivities.map((a) =>
+                  `${a.type} — ${new Date(a.date).toLocaleDateString()}`
+                )}
+                data={filteredActivities.map((a) => a.duration || 0)}
+              />
               <figcaption className="sr-only">
                 Bar chart showing your logged activities over the selected range.
               </figcaption>

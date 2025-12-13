@@ -157,6 +157,7 @@ button:focus-visible {
   margin-top: 2rem;
 }
 
+/* Each chart card */
 .chart-section {
   background: var(--card-bg);
   padding: 1rem;
@@ -164,23 +165,29 @@ button:focus-visible {
   border: 1px solid var(--border-color);
 }
 
-.chart-section h3 {
-  margin-bottom: 1rem;
-  font-size: 1.25rem;
-  color: var(--text-color);
-}
-
+/* IMPORTANT: Chart.js sizing */
 .chart-container {
+  position: relative;
   width: 100%;
-  height: 450px;
+  height: 320px;
 }
 
+/* Force canvas to obey container */
+.chart-container canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Mobile layout */
 @media (max-width: 768px) {
   .chart-grid {
     grid-template-columns: 1fr;
   }
-}
 
+  .chart-container {
+    height: 260px;
+  }
+}
 .sr-only {
   position: absolute;
   width: 1px;
