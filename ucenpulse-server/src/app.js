@@ -3,6 +3,7 @@ const cors = require("cors");
 const morgan = require("morgan");
 
 const authRoutes = require("./routes/authRoutes");
+const activityRoutes = require("./routes/activityRoutes");
 const authMiddleware = require("./middleware/authMiddleware");
 
 const app = express();
@@ -16,6 +17,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/auth", authRoutes);
+app.use("/api/activities", activityRoutes);
 
 app.get("/api/protected", authMiddleware, (req, res) => {
   res.json({
