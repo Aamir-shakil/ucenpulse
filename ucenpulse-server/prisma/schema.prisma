@@ -1,0 +1,47 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           Int        @id @default(autoincrement())
+  name         String
+  email        String     @unique
+  passwordHash String
+  createdAt    DateTime   @default(now())
+  activities   Activity[]
+  metrics      Metric[]
+}
+
+model Activity {
+  id               Int      @id @default(autoincrement())
+  type             String
+  duration         Int
+  notes            String?
+  date             DateTime
+  isOutdoor        Boolean  @default(false)
+  weatherTemp      Float?
+  weatherCode      Int?
+  weatherWindSpeed Float?
+  createdAt        DateTime @default(now())
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Metric {
+  id        Int      @id @default(autoincrement())
+  steps     Int?
+  sleep     Float?
+  water     Int?
+  calories  Int?
+  date      DateTime
+  createdAt DateTime @default(now())
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
