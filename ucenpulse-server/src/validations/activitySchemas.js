@@ -6,6 +6,8 @@ const activitySchema = z.object({
   notes: z.string().max(500, "Notes must be 500 characters or fewer").optional(),
   date: z.string().datetime("Invalid ISO date format"),
   isOutdoor: z.boolean().optional(),
+  latitude: z.number().min(-90).max(90).optional(),
+  longitude: z.number().min(-180).max(180).optional(),
 });
 
 module.exports = { activitySchema };

@@ -24,6 +24,8 @@ model Activity {
   notes            String?
   date             DateTime
   isOutdoor        Boolean  @default(false)
+  latitude         Float?
+  longitude        Float?
   weatherTemp      Float?
   weatherCode      Int?
   weatherWindSpeed Float?
