@@ -61,7 +61,7 @@ const login = async (req, res) => {
         details: parsed.error.flatten().fieldErrors,
       });
     }
-
+    //sanitize and normalize inputs
     const email = parsed.data.email.toLowerCase().trim();
     const password = parsed.data.password;
 
