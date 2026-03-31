@@ -2,12 +2,12 @@
  * Dashboard.jsx
  * --------------
  * Responsibilities:
- * - Load and display stored activities and metrics
- * - Provide forms for adding new data
- * - Show summaries and visual trends using charts
+ * - Load and display activity and metric data from the backend API
+ * - Provide forms for adding new activities and metrics
+ * - Show summary information and visual trends using charts
  * - Support responsive layout and accessibility
  *
- * Data is stored client-side using localStorage.
+ * Data is now retrieved from protected server-side API endpoints.
  */
 import { useState, useEffect } from "react";
 import ActivityForm from "./ActivityForm";
@@ -19,8 +19,13 @@ export default function Dashboard() {
   const [activities, setActivities] = useState([]);
   const [metrics, setMetrics] = useState([]);
   const [range, setRange] = useState("7"); // Default last 7 entries
+  const [error, setError] = useState("");
 
   useEffect(() => {
+    /**
+     * Fetch activities and metrics from the backend API
+     * when the dashboard first loads.
+     */
     const fetchData = async () => {
       try {
         const activitiesRes = await apiRequest("/activities");
@@ -29,30 +34,43 @@ export default function Dashboard() {
         setActivities(activitiesRes.activities || []);
         setMetrics(metricsRes.metrics || []);
       } catch (err) {
-        console.error("Failed to load data", err);
+        console.error("Failed to load dashboard data", err);
+        setError("Failed to load dashboard data.");
       }
     };
 
     fetchData();
   }, []);
 
-  // Sort by date ascending
-  const sortedMetrics = [...metrics].sort((a, b) => new Date(a.date) - new Date(b.date));
-  const sortedActivities = [...activities].sort((a, b) => new Date(a.date) - new Date(b.date));
+  // Sort entries by date ascending
+  const sortedMetrics = [...metrics].sort(
+    (a, b) => new Date(a.date) - new Date(b.date)
+  );
+  const sortedActivities = [...activities].sort(
+    (a, b) => new Date(a.date) - new Date(b.date)
+  );
 
-  // Filter based on range
+  // Filter displayed chart data based on selected range
   const filteredMetrics =
     range === "all" ? sortedMetrics : sortedMetrics.slice(-Number(range));
   const filteredActivities =
     range === "all" ? sortedActivities : sortedActivities.slice(-Number(range));
 
   return (
-    <section id="main-content" aria-labelledby="dashboard-heading" className="dashboard-section">
+    <section
+      id="main-content"
+      aria-labelledby="dashboard-heading"
+      className="dashboard-section"
+    >
       <h2 id="dashboard-heading">Dashboard</h2>
 
       <p>
-        Welcome to <strong>UCENPulse</strong> — your personal fitness and wellness dashboard.
+        Welcome to <strong>UCENPulse</strong> — your personal fitness and wellness
+        dashboard.
       </p>
+
+      {/* Error message if backend data fails to load */}
+      {error && <p className="error-message">{error}</p>}
 
       {/* Summary */}
       <div className="dashboard-summary">
@@ -71,6 +89,12 @@ export default function Dashboard() {
               <li key={a.id}>
                 <strong>{a.type}</strong> — {a.duration} mins
                 {a.notes && ` — Notes: ${a.notes}`}
+                {a.isOutdoor && a.weatherTemp !== null && (
+                  <>
+                    {" "}
+                    — Weather: {a.weatherTemp}°C, wind {a.weatherWindSpeed} km/h
+                  </>
+                )}
               </li>
             ))}
           </ul>
@@ -100,7 +124,9 @@ export default function Dashboard() {
       {/* Chart Range Filter */}
       {(metrics.length > 0 || activities.length > 0) && (
         <div className="chart-filters">
-          <label htmlFor="range-filter"><strong>Show:</strong></label>
+          <label htmlFor="range-filter">
+            <strong>Show:</strong>
+          </label>
           <select
             id="range-filter"
             value={range}
@@ -116,7 +142,6 @@ export default function Dashboard() {
       {/* Chart Grid */}
       {(metrics.length > 0 || activities.length > 0) && (
         <div className="chart-grid">
-
           {/* Steps Trend Chart */}
           {metrics.length > 0 && (
             <figure className="chart-section">
@@ -125,7 +150,9 @@ export default function Dashboard() {
                 type="line"
                 title={`Steps (last ${range} entries)`}
                 yLabel="Steps"
-                labels={filteredMetrics.map((m) => new Date(m.date).toLocaleDateString())}
+                labels={filteredMetrics.map((m) =>
+                  new Date(m.date).toLocaleDateString()
+                )}
                 data={filteredMetrics.map((m) => m.steps || 0)}
               />
               <figcaption className="sr-only">
@@ -142,8 +169,8 @@ export default function Dashboard() {
                 type="bar"
                 title={`Activity Duration (last ${range} entries)`}
                 yLabel="Minutes"
-                labels={filteredActivities.map((a) =>
-                  `${a.type} — ${new Date(a.date).toLocaleDateString()}`
+                labels={filteredActivities.map(
+                  (a) => `${a.type} — ${new Date(a.date).toLocaleDateString()}`
                 )}
                 data={filteredActivities.map((a) => a.duration || 0)}
               />
@@ -152,10 +179,8 @@ export default function Dashboard() {
               </figcaption>
             </figure>
           )}
-
         </div>
       )}
-
     </section>
   );
 }
