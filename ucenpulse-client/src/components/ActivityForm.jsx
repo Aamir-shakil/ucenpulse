@@ -1,50 +1,39 @@
-/**
- * ActivityForm.jsx
- * ----------------
- * React component for logging daily physical activities.
- * Functionality:
- * - Handles form submission and basic validation (type and duration required).
- * - Creates a new activity object with a unique ID and timestamp.
- * - Loads current activities from localStorage and appends the new activity.
- * - Saves updated data back to localStorage.
- * - Calls onNewActivity callback to update the parent component.
- * - Resets the form fields after submission.
- */
-
 import { useState } from "react";
-import { loadData, saveData } from "../storage";
+import { apiRequest } from "../api";
 
 export default function ActivityForm({ onNewActivity }) {
   const [type, setType] = useState("");
   const [duration, setDuration] = useState("");
   const [notes, setNotes] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!type || !duration) return; // basic validation
+    if (!type || !duration) return;
 
-    const newActivity = {
-      id: Date.now(),
-      type,
-      duration,
-      notes,
-      date: new Date().toISOString(),
-    };
+    try {
+      const res = await apiRequest("/activities", {
+        method: "POST",
+        body: JSON.stringify({
+          type,
+          duration: Number(duration),
+          notes,
+          date: new Date().toISOString(),
+          isOutdoor: false
+        }),
+      });
 
-    const data = loadData();
-    const updatedData = {
-      ...data,
-      activities: [...data.activities, newActivity],
-    };
+      if (onNewActivity) {
+        onNewActivity((prev) => [...prev, res.activity]);
+      }
 
-    saveData(updatedData);
-
-    if (onNewActivity) onNewActivity(updatedData.activities);
-
-    setType("");
-    setDuration("");
-    setNotes("");
+      setType("");
+      setDuration("");
+      setNotes("");
+    } catch (err) {
+      console.error(err);
+      alert("Failed to create activity");
+    }
   };
 
   return (
@@ -52,7 +41,7 @@ export default function ActivityForm({ onNewActivity }) {
       <h3>Log a New Activity</h3>
 
       <label>
-        Activity Type <span className="required">*</span>
+        Activity Type
         <select value={type} onChange={(e) => setType(e.target.value)} required>
           <option value="">Select an activity</option>
           <option value="Running">Running</option>
@@ -65,22 +54,20 @@ export default function ActivityForm({ onNewActivity }) {
       </label>
 
       <label>
-        Duration (minutes) <span className="required">*</span>
+        Duration (minutes)
         <input
           type="number"
           value={duration}
           onChange={(e) => setDuration(e.target.value)}
-          placeholder="e.g., 30"
           required
         />
       </label>
 
       <label>
-        Notes (optional)
+        Notes
         <textarea
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
-          placeholder="Any extra details..."
         />
       </label>
 
