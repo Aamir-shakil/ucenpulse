@@ -10,24 +10,30 @@
  * Data is stored client-side using localStorage.
  */
 import { useState, useEffect } from "react";
-import { loadData } from "../storage";
 import ActivityForm from "./ActivityForm";
 import MetricsForm from "./MetricsForm";
 import TrendsChart from "./TrendsChart";
+import { apiRequest } from "../api";
 
 export default function Dashboard() {
-  const [activities, setActivities] = useState(loadData().activities);
-  const [metrics, setMetrics] = useState(loadData().metrics);
+  const [activities, setActivities] = useState([]);
+  const [metrics, setMetrics] = useState([]);
   const [range, setRange] = useState("7"); // Default last 7 entries
 
   useEffect(() => {
-    const handleStorageChange = () => {
-      const data = loadData();
-      setActivities(data.activities);
-      setMetrics(data.metrics);
+    const fetchData = async () => {
+      try {
+        const activitiesRes = await apiRequest("/activities");
+        const metricsRes = await apiRequest("/metrics");
+
+        setActivities(activitiesRes.activities || []);
+        setMetrics(metricsRes.metrics || []);
+      } catch (err) {
+        console.error("Failed to load data", err);
+      }
     };
-    window.addEventListener("storage", handleStorageChange);
-    return () => window.removeEventListener("storage", handleStorageChange);
+
+    fetchData();
   }, []);
 
   // Sort by date ascending

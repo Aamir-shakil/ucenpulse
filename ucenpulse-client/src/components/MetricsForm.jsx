@@ -12,7 +12,7 @@
  */
 
 import { useState } from "react";
-import { loadData, saveData } from "../storage";
+import { apiRequest } from "../api";
 
 export default function MetricsForm({ onNewMetrics }) {
   const [steps, setSteps] = useState("");
@@ -20,37 +20,33 @@ export default function MetricsForm({ onNewMetrics }) {
   const [water, setWater] = useState("");
   const [calories, setCalories] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Create new metric entry
-    const newMetric = {
-      id: Date.now(),
-      steps: steps || null,
-      sleep: sleep || null,
-      water: water || null,
-      calories: calories || null,
-      date: new Date().toISOString(),
-    };
+    try {
+      const res = await apiRequest("/metrics", {
+        method: "POST",
+        body: JSON.stringify({
+          steps: steps ? Number(steps) : undefined,
+          sleep: sleep ? Number(sleep) : undefined,
+          water: water ? Number(water) : undefined,
+          calories: calories ? Number(calories) : undefined,
+          date: new Date().toISOString(),
+        }),
+      });
 
-    // Load current data and update metrics
-    const data = loadData();
-    const updatedData = {
-      ...data,
-      metrics: [...data.metrics, newMetric],
-    };
+      if (onNewMetrics) {
+        onNewMetrics((prev) => [...prev, res.metric]);
+      }
 
-    // Save updated data to localStorage
-    saveData(updatedData);
-
-    // Call parent callback to update metrics state
-    if (onNewMetrics) onNewMetrics(updatedData.metrics);
-
-    // Reset form fields
-    setSteps("");
-    setSleep("");
-    setWater("");
-    setCalories("");
+      setSteps("");
+      setSleep("");
+      setWater("");
+      setCalories("");
+    } catch (err) {
+      console.error(err);
+      alert("Failed to create metric");
+    }
   };
 
   return (
