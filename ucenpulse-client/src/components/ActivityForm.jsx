@@ -21,6 +21,8 @@ export default function ActivityForm({ onNewActivity }) {
           notes,
           isOutdoor,
           date: new Date().toISOString(),
+          latitude: isOutdoor ? 53.4808 : undefined,
+          longitude: isOutdoor ? -2.2426 : undefined,
         }),
       });
 
