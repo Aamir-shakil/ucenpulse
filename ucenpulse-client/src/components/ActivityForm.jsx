@@ -5,6 +5,7 @@ export default function ActivityForm({ onNewActivity }) {
   const [type, setType] = useState("");
   const [duration, setDuration] = useState("");
   const [notes, setNotes] = useState("");
+  const [isOutdoor, setIsOutdoor] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,8 +19,8 @@ export default function ActivityForm({ onNewActivity }) {
           type,
           duration: Number(duration),
           notes,
+          isOutdoor,
           date: new Date().toISOString(),
-          isOutdoor: false
         }),
       });
 
@@ -69,6 +70,15 @@ export default function ActivityForm({ onNewActivity }) {
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
         />
+      </label>
+
+      <label>
+        <input
+          type="checkbox"
+          checked={isOutdoor}
+          onChange={(e) => setIsOutdoor(e.target.checked)}
+        />
+        Outdoor activity (attach weather data)
       </label>
 
       <button type="submit">Add Activity</button>

@@ -90,6 +90,9 @@ export default function Dashboard() {
                 <strong>{a.type}</strong> — {a.duration} mins
                 {a.notes && ` — Notes: ${a.notes}`}
                 {a.isOutdoor && a.weatherTemp !== null && (
+                  <> — {a.weatherTemp}°C, wind {a.weatherWindSpeed} km/h</>
+                )}
+                {a.isOutdoor && a.weatherTemp !== null && (
                   <>
                     {" "}
                     — Weather: {a.weatherTemp}°C, wind {a.weatherWindSpeed} km/h
