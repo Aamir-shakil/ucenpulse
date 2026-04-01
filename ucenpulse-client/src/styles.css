@@ -243,3 +243,13 @@ button:focus-visible {
 .logout-btn:hover {
   background: #b91c1c;
 }
+
+.error-message {
+  color: #dc2626;
+  font-weight: 500;
+}
+
+.success-message {
+  color: #15803d;
+  font-weight: 500;
+}
