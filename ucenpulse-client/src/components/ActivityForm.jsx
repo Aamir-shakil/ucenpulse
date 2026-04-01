@@ -10,7 +10,22 @@ export default function ActivityForm({ onNewActivity }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!type || !duration) return;
+    let latitude = undefined;
+    let longitude = undefined;
+
+    // Get user location if outdoor activity
+    if (isOutdoor && navigator.geolocation) {
+      try {
+        const position = await new Promise((resolve, reject) => {
+          navigator.geolocation.getCurrentPosition(resolve, reject);
+        });
+
+        latitude = position.coords.latitude;
+        longitude = position.coords.longitude;
+      } catch (err) {
+        console.warn("Location access denied, using fallback");
+      }
+    }
 
     try {
       const res = await apiRequest("/activities", {
@@ -20,9 +35,9 @@ export default function ActivityForm({ onNewActivity }) {
           duration: Number(duration),
           notes,
           isOutdoor,
+          latitude,
+          longitude,
           date: new Date().toISOString(),
-          latitude: isOutdoor ? 53.4808 : undefined,
-          longitude: isOutdoor ? -2.2426 : undefined,
         }),
       });
 
@@ -33,6 +48,8 @@ export default function ActivityForm({ onNewActivity }) {
       setType("");
       setDuration("");
       setNotes("");
+      setIsOutdoor(false);
+
     } catch (err) {
       console.error(err);
       alert("Failed to create activity");
