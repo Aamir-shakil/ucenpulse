@@ -8,6 +8,7 @@ const getSummaryReport = async (req, res) => {
       where: { userId },
       select: {
         duration: true,
+        isOutdoor: true,
       },
     });
 
@@ -27,6 +28,10 @@ const getSummaryReport = async (req, res) => {
     const totalDuration = activities.reduce((sum, activity) => {
       return sum + activity.duration;
     }, 0);
+
+    const outdoorActivities = activities.filter(
+      (activity) => activity.isOutdoor
+    ).length;
 
     const average = (values) => {
       const validValues = values.filter(
@@ -50,6 +55,7 @@ const getSummaryReport = async (req, res) => {
         totalActivities,
         totalMetrics,
         totalDuration,
+        outdoorActivities,
         avgSteps,
         avgSleep,
         avgWater,
