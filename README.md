@@ -44,7 +44,7 @@ Request/response examples
 
 Installation
 Clone repository
-git clone https://github.com/yourusername/ucenpulse.git
+git clone https://github.com/Aamir-shakil/ucenpulse.git
 cd ucenpulse
 Server Setup
 cd ucenpulse-server
