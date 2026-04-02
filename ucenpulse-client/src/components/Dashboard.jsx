@@ -20,6 +20,7 @@ export default function Dashboard() {
   const [metrics, setMetrics] = useState([]);
   const [range, setRange] = useState("7"); // Default last 7 entries
   const [error, setError] = useState("");
+  const [summary, setSummary] = useState(null);
 
   useEffect(() => {
     /**
@@ -30,6 +31,8 @@ export default function Dashboard() {
       try {
         const activitiesRes = await apiRequest("/activities");
         const metricsRes = await apiRequest("/metrics");
+        const reportRes = await apiRequest("/reports/summary");
+        setSummary(reportRes.summary || null);
 
         setActivities(activitiesRes.activities || []);
         setMetrics(metricsRes.metrics || []);
@@ -71,6 +74,18 @@ export default function Dashboard() {
 
       {/* Error message if backend data fails to load */}
       {error && <p className="error-message">{error}</p>}
+
+      {/* Summary Report Card */}
+      {summary && (
+        <div className="card">
+          <h3>Progress Summary</h3>
+          <p><strong>Total activities:</strong> {summary.totalActivities}</p>
+          <p><strong>Total duration:</strong> {summary.totalDuration} mins</p>
+          <p><strong>Outdoor activities:</strong> {summary.outdoorActivities}</p>
+          <p><strong>Total metric entries:</strong> {summary.totalMetrics}</p>
+          <p><strong>Average steps:</strong> {summary.avgSteps}</p>
+        </div>
+      )}
 
       {/* Summary */}
       <div className="dashboard-summary">
