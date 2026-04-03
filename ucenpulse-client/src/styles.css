@@ -2,20 +2,21 @@
    WCAG Accessible Colour System 
    =========================================== */
 :root {
-  --background-color: #F9FAFB;       
-  --text-color: #111827;             
-  --muted-text: #4B5563;             
+  --background-color: #F9FAFB;
+  --text-color: #111827;
+  --muted-text: #4B5563;
 
-  --primary: #4F46E5;               
+  --primary: #4F46E5;
   --primary-hover: #4338CA;
 
- --secondary: #1E40AF;             
-  --secondary-hover: #1E3A8A;       
+  --secondary: #1E40AF;
+  --secondary-hover: #1E3A8A;
 
   --card-bg: #FFFFFF;
   --border-color: #E5E7EB;
 
   --error: #DC2626;
+  --success: #15803D;
 }
 
 /* ===========================================
@@ -51,14 +52,25 @@ body {
 }
 
 .app-root {
-  max-width: 960px;
+  max-width: 1280px;
   margin: 2rem auto;
-  padding: 1rem;
+  padding: 1.5rem 2rem;
 }
 
 /* ===========================================
    Header
    =========================================== */
+.app-header {
+  margin-bottom: 2rem;
+  padding: 1.5rem 1.75rem;
+  background:linear-gradient(135deg, ffffff 0%, #eef2ff 100%);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  box-shadow:0 6px 18px rgba(0,0,0,0.6);
+}
+
+  
+
 .app-header h1 {
   margin: 0;
   font-size: 2rem;
@@ -66,8 +78,9 @@ body {
 
 .app-header .muted {
   color: var(--muted-text);
-  font-size: 0.9rem;
-  margin-top: 4px;
+  font-size: 0.95rem;
+  margin-top: 0.35rem;
+  margin-bottom: 1rem;
 }
 
 /* ===========================================
@@ -75,7 +88,7 @@ body {
    =========================================== */
 button {
   border-radius: 8px;
-  padding: 0.6em 1.2em;
+  padding: 0.75rem 1.2rem;
   font-size: 1em;
   font-family: inherit;
   background-color: var(--secondary);
@@ -102,29 +115,72 @@ button:focus-visible {
 .metrics-form {
   display: flex;
   flex-direction: column;
-  gap: 0.7rem;
-  margin-top: 1rem;
+  gap: 1rem;
+  margin-top: 0;
+}
+
+.activity-form label,
+.metrics-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-weight: 500;
 }
 
 .activity-form input,
 .activity-form textarea,
-.metrics-form input {
-  padding: 0.55rem;
-  border-radius: 4px;
+.activity-form select,
+.metrics-form input,
+.metrics-form textarea,
+.metrics-form select {
+  width: 100%;
+  max-width: 100%;
+  padding: 0.75rem;
+  border-radius: 8px;
   border: 2px solid var(--border-color);
   background: var(--card-bg);
   color: var(--text-color);
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.activity-form textarea,
+.metrics-form textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.activity-form button,
+.metrics-form button {
+  width: 100%;
+  margin-top: 0.5rem;
 }
 
 .required {
   color: var(--error);
 }
 
+/* Checkbox row for outdoor activity */
+.activity-form label:has(input[type="checkbox"]) {
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 400;
+}
+
+.activity-form input[type="checkbox"] {
+  width: auto;
+  margin: 0;
+}
+
 /* ===========================================
    Dashboard
    =========================================== */
 .dashboard-section {
-  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 0;
 }
 
 .dashboard-summary {
@@ -135,16 +191,23 @@ button:focus-visible {
 /* ===========================================
    Lists
    =========================================== */
+.activity-list,
+.metrics-list {
+  padding: 1.5rem;
+}
+
 .activity-list ul,
 .metrics-list ul {
   list-style: none;
   padding-left: 0;
+  margin: 0;
 }
 
 .activity-list li,
 .metrics-list li {
-  padding: 0.5rem 0;
+  padding: 0.85rem 0;
   border-bottom: 1px solid var(--border-color);
+  line-height: 1.5;
 }
 
 /* ===========================================
@@ -152,24 +215,32 @@ button:focus-visible {
    =========================================== */
 .chart-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 2rem;
-  margin-top: 2rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem;
+  margin-top: 0;
 }
 
 /* Each chart card */
 .chart-section {
   background: var(--card-bg);
-  padding: 1rem;
-  border-radius: 10px;
+  padding: 1.5rem;
+  border-radius: 12px;
   border: 1px solid var(--border-color);
+  border-top: 4px solid var(--secondary);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.chart-section h3 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
 }
 
 /* Chart.js sizing */
 .chart-container {
   position: relative;
   width: 100%;
-  height: 320px;
+  height: 360px;
 }
 
 /* Force canvas to obey container */
@@ -180,14 +251,23 @@ button:focus-visible {
 
 /* Mobile layout */
 @media (max-width: 768px) {
+  .app-root {
+    padding: 1rem;
+  }
+
   .chart-grid {
     grid-template-columns: 1fr;
   }
 
   .chart-container {
-    height: 260px;
+    height: 280px;
+  }
+
+  .summary-card {
+    grid-template-columns: 1fr;
   }
 }
+
 .sr-only {
   position: absolute;
   width: 1px;
@@ -206,16 +286,17 @@ button:focus-visible {
 .card {
   background-color: #ffffff;
   color: #000;
-  border-radius: 10px;
+  border-radius: 12px;
   padding: 1.5rem;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   margin-bottom: 2rem;
+  border-top: 4px solid var(--primary);
 }
 
 .card h3 {
   margin-top: 0;
   margin-bottom: 1rem;
-  font-size: 1.25rem;
+  font-size: 1.4rem;
 }
 
 .card ul {
@@ -235,10 +316,43 @@ button:focus-visible {
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
+/* Form cards */
+.form-card {
+  padding: 1.5rem;
+}
+
+/* Summary stats card layout */
+.summary-card {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+}
+
+.summary-card p {
+  margin: 0;
+  padding: 0.85rem 1rem;
+  background: #f8fafc;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+}
+
+/* Chart filter alignment */
+.chart-filters {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.chart-filters select {
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  border: 2px solid var(--border-color);
+  background: white;
+}
+
 /* ===========================================
    Auth Form (Login/Register)
    =========================================== */
-
 .card form {
   display: flex;
   flex-direction: column;
@@ -255,16 +369,18 @@ button:focus-visible {
 
 /* inputs spacing + match your other forms */
 .card input {
-  padding: 0.55rem;
-  border-radius: 4px;
+  padding: 0.75rem;
+  border-radius: 8px;
   border: 2px solid var(--border-color);
   background: var(--card-bg);
   color: var(--text-color);
+  font-size: 1rem;
+  box-sizing: border-box;
 }
 
 /* spacing between buttons */
 .card button + button {
-  margin-top: 0.5rem;
+  margin-top: 0.75rem;
 }
 
 /* Auth buttons stacked */
@@ -279,9 +395,17 @@ button:focus-visible {
   margin-right: auto;
 }
 
+/* ===========================================
+   Auth / Feedback / Utility
+   =========================================== */
 .logout-btn {
-  margin-top: 10px;
+  margin-top: 1rem;
   background: #dc2626;
+  width: auto !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 110px;
 }
 
 .logout-btn:hover {
@@ -289,11 +413,13 @@ button:focus-visible {
 }
 
 .error-message {
-  color: #dc2626;
+  color: var(--error);
   font-weight: 500;
+  margin: 0;
 }
 
 .success-message {
-  color: #15803d;
+  color: var(--success);
   font-weight: 500;
+  margin: 0;
 }

@@ -87,13 +87,11 @@ export default function Dashboard() {
         </div>
       )}
 
-      {/* Summary */}
-      <div className="dashboard-summary">
-        <strong>Total activities logged:</strong> {activities.length}
-      </div>
 
       {/* Activity Form */}
-      <ActivityForm onNewActivity={setActivities} />
+      <div className="card form-card">
+        <ActivityForm onNewActivity={setActivities} />
+      </div>
 
       {/* Activity List */}
       {activities.length > 0 && (
@@ -120,7 +118,9 @@ export default function Dashboard() {
       )}
 
       {/* Metrics Form */}
-      <MetricsForm onNewMetrics={setMetrics} />
+      <div className="card form-card">
+        <ActivityForm onNewActivity={setActivities} />
+      </div>
 
       {/* Metrics List */}
       {metrics.length > 0 && (
