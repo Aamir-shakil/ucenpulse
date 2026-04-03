@@ -22,20 +22,33 @@ export default function Dashboard() {
   const [error, setError] = useState("");
   const [summary, setSummary] = useState(null);
 
+  /**
+   * Fetch summary report data from the backend API.
+   * This is reused after new activities or metrics are added
+   * so the summary updates immediately without refreshing the page.
+   */
+  const fetchSummary = async () => {
+    try {
+      const reportRes = await apiRequest("/reports/summary");
+      setSummary(reportRes.summary || null);
+    } catch (err) {
+      console.error("Failed to load summary", err);
+    }
+  };
+
   useEffect(() => {
     /**
-     * Fetch activities and metrics from the backend API
+     * Fetch activities, metrics, and summary report
      * when the dashboard first loads.
      */
     const fetchData = async () => {
       try {
         const activitiesRes = await apiRequest("/activities");
         const metricsRes = await apiRequest("/metrics");
-        const reportRes = await apiRequest("/reports/summary");
-        setSummary(reportRes.summary || null);
 
         setActivities(activitiesRes.activities || []);
         setMetrics(metricsRes.metrics || []);
+        await fetchSummary();
       } catch (err) {
         console.error("Failed to load dashboard data", err);
         setError("Failed to load dashboard data.");
@@ -79,18 +92,34 @@ export default function Dashboard() {
       {summary && (
         <div className="card">
           <h3>Progress Summary</h3>
-          <p><strong>Total activities:</strong> {summary.totalActivities}</p>
-          <p><strong>Total duration:</strong> {summary.totalDuration} mins</p>
-          <p><strong>Outdoor activities:</strong> {summary.outdoorActivities}</p>
-          <p><strong>Total metric entries:</strong> {summary.totalMetrics}</p>
-          <p><strong>Average steps:</strong> {summary.avgSteps}</p>
+          <div className="summary-card">
+            <p>
+              <strong>Total activities:</strong> {summary.totalActivities}
+            </p>
+            <p>
+              <strong>Total duration:</strong> {summary.totalDuration} mins
+            </p>
+            <p>
+              <strong>Outdoor activities:</strong> {summary.outdoorActivities}
+            </p>
+            <p>
+              <strong>Total metric entries:</strong> {summary.totalMetrics}
+            </p>
+            <p>
+              <strong>Average steps:</strong> {summary.avgSteps}
+            </p>
+          </div>
         </div>
       )}
 
-
       {/* Activity Form */}
       <div className="card form-card">
-        <ActivityForm onNewActivity={setActivities} />
+        <ActivityForm
+          onNewActivity={(data) => {
+            setActivities(data);
+            fetchSummary();
+          }}
+        />
       </div>
 
       {/* Activity List */}
@@ -102,9 +131,6 @@ export default function Dashboard() {
               <li key={a.id}>
                 <strong>{a.type}</strong> — {a.duration} mins
                 {a.notes && ` — Notes: ${a.notes}`}
-                {a.isOutdoor && a.weatherTemp !== null && (
-                  <> — {a.weatherTemp}°C, wind {a.weatherWindSpeed} km/h</>
-                )}
                 {a.isOutdoor && a.weatherTemp !== null && (
                   <>
                     {" "}
@@ -119,7 +145,12 @@ export default function Dashboard() {
 
       {/* Metrics Form */}
       <div className="card form-card">
-        <ActivityForm onNewActivity={setActivities} />
+        <MetricsForm
+          onNewMetrics={(data) => {
+            setMetrics(data);
+            fetchSummary();
+          }}
+        />
       </div>
 
       {/* Metrics List */}
