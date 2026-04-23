@@ -1,4 +1,19 @@
+
+/**
+ * Activity Validation Schema
+ *
+ * Defines the structure and constraints for activity data.
+ * Ensures incoming requests contain valid and well-formed data
+ * before being processed by the application.
+ */
+
 const { z } = require("zod");
+
+/**
+ * Schema for validating activity input
+ * - Enforces required fields and data types
+ * - Applies constraints (e.g. positive duration, valid coordinates)
+ */
 
 const activitySchema = z.object({
   type: z.string().min(2, "Activity type is required"),

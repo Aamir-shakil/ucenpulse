@@ -1,3 +1,10 @@
+
+/**
+ * Server Entry Point
+ *
+ * Loads environment variables and starts the Express server.
+ */
+
 require("dotenv").config();
 
 const app = require("./app");

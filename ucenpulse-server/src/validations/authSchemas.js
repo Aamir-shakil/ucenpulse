@@ -1,4 +1,19 @@
+
+/**
+ * Authentication Validation Schemas
+ *
+ * Defines validation rules for user registration and login.
+ * Ensures that authentication-related input is correctly structured
+ * before being processed by the application.
+ */
+
 const { z } = require("zod");
+
+/**
+ * Schema for user registration
+ * - Validates name, email, and password
+ * - Enforces minimum length requirements
+ */
 
 const registerSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),

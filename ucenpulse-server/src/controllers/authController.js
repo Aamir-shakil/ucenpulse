@@ -1,7 +1,21 @@
+/**
+ * Authentication Controller
+ *
+ * Handles user registration and login.
+ * Implements input validation, password hashing, and JWT-based authentication.
+ */
+
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const prisma = require("../utils/prisma");
 const { registerSchema, loginSchema } = require("../validations/authSchemas");
+
+/**
+ * Register a new user
+ * - Validates input using schema
+ * - Normalises and sanitises user data
+ * - Hashes password before storing
+ */
 
 const register = async (req, res) => {
   try {
@@ -50,6 +64,13 @@ const register = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
+
+/**
+ * Authenticate user and issue JWT
+ * - Validates input
+ * - Verifies credentials
+ * - Generates signed token for protected route access
+ */
 
 const login = async (req, res) => {
   try {

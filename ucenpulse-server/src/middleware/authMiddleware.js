@@ -1,4 +1,20 @@
+
+/**
+ * Authentication Middleware
+ *
+ * Protects routes by verifying JWT tokens.
+ * Extracts user information from the token and attaches it to the request.
+ */
+
 const jwt = require("jsonwebtoken");
+
+/**
+ * Middleware to validate JWT from Authorization header
+ * - Ensures token is present
+ * - Validates token format (Bearer scheme)
+ * - Verifies token signature and expiry
+ * - Attaches decoded user data to req.user
+ */
 
 const authMiddleware = (req, res, next) => {
   try {

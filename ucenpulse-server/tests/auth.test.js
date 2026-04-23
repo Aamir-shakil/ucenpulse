@@ -1,3 +1,10 @@
+/**
+ * Authentication and Protected Route Tests
+ *
+ * Tests core authentication workflows, including user registration,
+ * login, token issuance, and access control for protected routes.
+ */
+
 const request = require("supertest");
 const app = require("../src/app");
 const prisma = require("../src/utils/prisma");

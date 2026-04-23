@@ -1,3 +1,11 @@
+
+/**
+ * Metric Controller
+ *
+ * Handles CRUD operations for user health metrics.
+ * All operations are scoped to the authenticated user.
+ */
+
 const prisma = require("../utils/prisma");
 const { metricSchema } = require("../validations/metricSchemas");
 

@@ -1,4 +1,18 @@
+/**
+ * Activity Service
+ *
+ * Prepares and transforms activity data before it is stored.
+ * Handles input normalisation and conditional weather enrichment.
+ */
+
 const { getWeatherForLocation } = require("./weatherService");
+
+/**
+ * Build activity data object for database storage
+ * - Sanitises and formats input
+ * - Applies default values for optional fields
+ * - Fetches weather data for outdoor activities
+ */
 
 const buildActivityData = async (data) => {
   const type = data.type.trim();
@@ -14,6 +28,12 @@ const buildActivityData = async (data) => {
     weatherCode: null,
     weatherWindSpeed: null,
   };
+
+   /**
+   * Only fetch weather data if:
+   * - activity is marked as outdoor
+   * - valid coordinates are provided
+   */
 
   if (isOutdoor && latitude !== null && longitude !== null) {
     const weatherResult = await getWeatherForLocation(latitude, longitude);

@@ -1,3 +1,10 @@
+/**
+ * API Integration Tests
+ *
+ * Tests authenticated activity, metric, and reporting endpoints
+ * using Supertest against the UCENPulse Express application.
+ */
+
 const request = require("supertest");
 const app = require("../src/app");
 const prisma = require("../src/utils/prisma");
@@ -12,6 +19,13 @@ describe("Activities, metrics, and reports API tests", () => {
   let token;
   let activityId;
   let metricId;
+
+   /**
+   * Prepare a clean test environment:
+   * - remove old test data
+   * - register test user
+   * - log in and store JWT for protected route testing
+   */
 
   beforeAll(async () => {
     await prisma.activity.deleteMany();

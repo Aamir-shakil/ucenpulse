@@ -1,3 +1,11 @@
+/**
+ * Swagger Configuration
+ *
+ * Sets up OpenAPI (Swagger) documentation for the UCENPulse API.
+ * This allows developers to view, test, and understand available
+ * endpoints, request formats, and authentication requirements.
+ */
+
 const swaggerJSDoc = require("swagger-jsdoc");
 
 const options = {

@@ -1,4 +1,19 @@
+
+/**
+ * Report Controller
+ *
+ * Generates aggregated summary data for the authenticated user.
+ * Combines activity and metric data to produce meaningful insights.
+ */
+
 const prisma = require("../utils/prisma");
+
+/**
+ * Generate summary report
+ * - Retrieves user activities and metrics
+ * - Calculates totals and averages
+ * - Returns processed insights for dashboard display
+ */
 
 const getSummaryReport = async (req, res) => {
   try {
@@ -32,6 +47,9 @@ const getSummaryReport = async (req, res) => {
     const outdoorActivities = activities.filter(
       (activity) => activity.isOutdoor
     ).length;
+
+     
+     //Calculate average while ignoring null/undefined values
 
     const average = (values) => {
       const validValues = values.filter(

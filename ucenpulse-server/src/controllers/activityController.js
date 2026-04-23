@@ -1,3 +1,10 @@
+/**
+ * Activity Controller
+ *
+ * Handles CRUD operations for user activities.
+ * All routes are protected and scoped to the authenticated user.
+ */
+
 const prisma = require("../utils/prisma");
 const { activitySchema } = require("../validations/activitySchemas");
 const { buildActivityData } = require("../services/activityService");
@@ -38,6 +45,12 @@ const getActivityById = async (req, res) => {
   }
 };
 
+/**
+ * Create a new activity
+ * - Validates input using schema
+ * - Enriches data (e.g. weather) via service layer
+ */
+
 const createActivity = async (req, res) => {
   try {
     const parsed = activitySchema.safeParse(req.body);
@@ -67,6 +80,12 @@ const createActivity = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
+
+/**
+ * Update an existing activity
+ * - Validates input
+ * - Ensures activity belongs to the authenticated user
+ */
 
 const updateActivity = async (req, res) => {
   try {

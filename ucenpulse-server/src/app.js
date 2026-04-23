@@ -1,3 +1,11 @@
+
+/**
+ * Express Application Setup
+ *
+ * Configures middleware, routes, and API documentation
+ * for the UCENPulse backend application.
+ */
+
 const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
@@ -11,6 +19,13 @@ const reportRoutes = require("./routes/reportRoutes");
 const authMiddleware = require("./middleware/authMiddleware");
 
 const app = express();
+
+/**
+ * Global middleware
+ * - Enables cross-origin requests
+ * - Parses JSON request bodies
+ * - Logs HTTP requests for development
+ */
 
 app.use(cors());
 app.use(express.json());
@@ -31,6 +46,11 @@ app.get("/api/protected", authMiddleware, (req, res) => {
     user: req.user,
   });
 });
+
+/**
+ * Swagger API documentation route
+ * Provides interactive interface for testing endpoints
+ */
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
