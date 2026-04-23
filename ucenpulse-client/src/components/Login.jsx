@@ -42,7 +42,7 @@ export default function Login({ onLogin }) {
 
   return (
     <form onSubmit={handleSubmit} className="card">
-      <h3>{isRegisterMode ? "Register" : "Login"}</h3>
+      <h2>{isRegisterMode ? "Register" : "Login"}</h2>
 
       {error && <p className="error-message">{error}</p>}
       {success && <p className="success-message">{success}</p>}

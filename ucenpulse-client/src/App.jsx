@@ -44,7 +44,7 @@ export default function App() {
       </header>
 
       {/* Main content */}
-      <main>
+      <main id="main-content">
         {!loggedIn ? (
           <Login onLogin={() => setLoggedIn(true)} />
         ) : (

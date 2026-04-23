@@ -293,7 +293,7 @@ button:focus-visible {
   border-top: 4px solid var(--primary);
 }
 
-.card h3 {
+.card h2 {
   margin-top: 0;
   margin-bottom: 1rem;
   font-size: 1.4rem;
